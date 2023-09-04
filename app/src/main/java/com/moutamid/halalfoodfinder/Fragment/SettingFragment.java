@@ -84,6 +84,7 @@ public class SettingFragment extends Fragment {
             }
         });
 
+
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
