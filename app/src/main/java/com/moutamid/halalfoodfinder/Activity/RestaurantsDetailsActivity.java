@@ -17,7 +17,9 @@ import com.moutamid.halalfoodfinder.R;
 import java.util.ArrayList;
 
 public class RestaurantsDetailsActivity extends AppCompatActivity {
-    ImageView image, favourite;
+
+    //TODO name change of variable
+    ImageView image, favourite, unfavourite;
     TextView name, phone_res, address_res, description, website, title;
     TextView mon_opnening, tue_opnening, wed_opnening, thursday_opnening, fri_opnening, sat_opnening, sun_opnening;
     TextView mon_closing, tue_closing, wed_closing, thursday_closing, fri_closing, sat_closing, sun_closing;
@@ -25,12 +27,14 @@ public class RestaurantsDetailsActivity extends AppCompatActivity {
     Button map;
     String key;
 
+    ResturantModel current_resturantModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants_details);
         image = findViewById(R.id.image);
+        unfavourite = findViewById(R.id.unfavourite);
         favourite = findViewById(R.id.favourite);
         map = findViewById(R.id.map);
         phone_res = findViewById(R.id.phone_res);
@@ -53,8 +57,11 @@ public class RestaurantsDetailsActivity extends AppCompatActivity {
         fri_closing = findViewById(R.id.fru_closing);
         sat_closing = findViewById(R.id.sat_closing);
         sun_closing = findViewById(R.id.sun_closing);
-        name.setText(getIntent().getStringExtra("name"));
-        title.setText(getIntent().getStringExtra("name"));
+        current_resturantModel = (ResturantModel) Stash.getObject("CurrentModel", ResturantModel.class);
+        name.setText(current_resturantModel.getName());
+        title.setText(current_resturantModel.getName());
+
+        //TODO
         address_res.setText(getIntent().getStringExtra("address"));
         tue_opnening.setText(getIntent().getStringExtra("tueOpnening"));
         tue_closing.setText(getIntent().getStringExtra("tueClosing"));
@@ -69,14 +76,12 @@ public class RestaurantsDetailsActivity extends AppCompatActivity {
         String imageUrl = getIntent().getStringExtra("imageUrl");
         Glide.with(RestaurantsDetailsActivity.this).load(imageUrl).into(image);
         phone_res.setText(getIntent().getStringExtra("phone"));
-
         description.setText(getIntent().getStringExtra("shortDescription"));
         mon_closing.setText(getIntent().getStringExtra("monClosing"));
         mon_opnening.setText(getIntent().getStringExtra("monOpnening"));
         thursday_closing.setText(getIntent().getStringExtra("thursdayClosing"));
         thursday_opnening.setText(getIntent().getStringExtra("thursdayOpnening"));
         website.setText(getIntent().getStringExtra("website"));
-
         lat = getIntent().getDoubleExtra("lat", 0.0);
         lng = getIntent().getDoubleExtra("lng", 0.0);
         key = getIntent().getStringExtra("key");
@@ -84,10 +89,12 @@ public class RestaurantsDetailsActivity extends AppCompatActivity {
 if(resturantModels!=null)
 {
     for (int i = 0; i < resturantModels.size(); i++) {
-        if (key.equals(resturantModels.get(i).getKey())) {
-            favourite.setImageResource(R.drawable.baseline_favorite_24);
 
+        if (current_resturantModel.getKey().equals(resturantModels.get(i).getKey())) {
+            favourite.setImageResource(R.drawable.baseline_favorite_24);
+//
         }
+
     }
 }
         map.setOnClickListener(new View.OnClickListener() {
@@ -101,13 +108,28 @@ if(resturantModels!=null)
             }
         });
         favourite.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                ArrayList<ResturantModel> resturantModelArrayList = Stash.getArrayList("Favourite", ResturantModel.class);
+                resturantModelArrayList.add(current_resturantModel);
+                Stash.put("Favourite", resturantModelArrayList);
+                favourite.setImageResource(R.drawable.baseline_favorite_24);
+            }
+        });
+        unfavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ArrayList<ResturantModel> resturantModel = Stash.getArrayList("Favourite", ResturantModel.class);
-
-                resturantModel.add(new ResturantModel(key));
+                for (int i = 0; i < resturantModel.size(); i++) {
+                    if (resturantModel.get(i).getKey().equals(current_resturantModel.getKey())) {
+                        resturantModel.remove(i);
+                    }
+                }
                 Stash.put("Favourite", resturantModel);
-                favourite.setImageResource(R.drawable.baseline_favorite_24);
+                favourite.setImageResource(R.drawable.baseline_favorite_border_24);
+
             }
         });
     }

@@ -28,7 +28,7 @@ import java.util.Objects;
 public class Config {
     public static String preference_name = "HalalFoodFinder";
 
-
+//TODO use static key names
     static SharedPreferences sharedpreferences;
     static SharedPreferences.Editor editor;
 

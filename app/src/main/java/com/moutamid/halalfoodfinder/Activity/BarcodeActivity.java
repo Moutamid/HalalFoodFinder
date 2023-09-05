@@ -12,8 +12,10 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -71,6 +73,7 @@ public class BarcodeActivity extends AppCompatActivity {
 //        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
     }
 
+    //TODO
     private void initialiseDetectorsAndSources() {
 
         barcodeDetector = new BarcodeDetector.Builder(this)
@@ -91,10 +94,12 @@ public class BarcodeActivity extends AppCompatActivity {
                     } else {
                         ActivityCompat.requestPermissions(BarcodeActivity.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
+
                 }
             }
 
@@ -211,5 +216,13 @@ public class BarcodeActivity extends AppCompatActivity {
         onBackPressed();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(this, "abc "+requestCode+""+resultCode+""+data, Toast.LENGTH_SHORT).show();
+//        if (requestCode==201) {
+            initialiseDetectorsAndSources();
 
+//        }
+    }
 }

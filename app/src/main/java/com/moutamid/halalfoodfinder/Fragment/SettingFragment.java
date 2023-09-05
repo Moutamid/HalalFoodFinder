@@ -12,11 +12,16 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.BuildConfig;
+import com.fxn.stash.Stash;
+import com.moutamid.halalfoodfinder.Activity.MainActivity;
+import com.moutamid.halalfoodfinder.Model.ResturantModel;
 import com.moutamid.halalfoodfinder.R;
+
+import java.util.ArrayList;
 
 public class SettingFragment extends Fragment {
 
-    TextView email, facebook, website, privacy_policy, share, rate, about;
+    TextView email, facebook, website, privacy_policy, share, rate, about, rest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,7 +34,16 @@ public class SettingFragment extends Fragment {
         website = view.findViewById(R.id.web_edt);
         rate = view.findViewById(R.id.rate);
         share = view.findViewById(R.id.share);
+        rest = view.findViewById(R.id.rest);
+        ArrayList<ResturantModel> resturantModel = Stash.getArrayList("Favourite", ResturantModel.class);
+        rest.setText(resturantModel.size() + "");
+        rest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+        Intent intent= new Intent(getContext(), MainActivity.class);
 
+            }
+        });
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,9 +97,6 @@ public class SettingFragment extends Fragment {
                 }
             }
         });
-
-
-
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

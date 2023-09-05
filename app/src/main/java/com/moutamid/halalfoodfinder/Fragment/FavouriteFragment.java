@@ -41,6 +41,7 @@ public class FavouriteFragment extends Fragment {
         content_rcv = view.findViewById(R.id.content_rcv);
         no_text = view.findViewById(R.id.no_text);
         content_rcv.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        //TODO
         herbsAdapter = new AllResturantsAdapter(getContext(), productModelList);
         content_rcv.setAdapter(herbsAdapter);
         if (Config.isNetworkAvailable(getContext())) {
@@ -56,34 +57,31 @@ public class FavouriteFragment extends Fragment {
     public void getProduct() {
         Config.showProgressDialog(getContext());
         ArrayList<ResturantModel> resturantModels = Stash.getArrayList("Favourite", ResturantModel.class);
-        Log.d("data", resturantModels.size() + "");
-        for (int i = 0; i < resturantModels.size(); i++) {
-            Log.d("data", resturantModels.get(i).getKey());
-        }
-        Config.databaseReference().child("Restaurants").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                productModelList.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ResturantModel herbsModel = ds.getValue(ResturantModel.class);
-                    for (int i = 0; i < resturantModels.size(); i++) {
-                        if (herbsModel.getKey().equals(resturantModels.get(i).getKey())) {
-                            productModelList.add(herbsModel);
-                        }
-                    }
-                }
-                Config.dismissProgressDialog();
-                herbsAdapter.notifyDataSetChanged();
-            }
 
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-
-        });
+//        Config.databaseReference().child("Restaurants").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                productModelList.clear();
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    ResturantModel herbsModel = ds.getValue(ResturantModel.class);
+//                    for (int i = 0; i < resturantModels.size(); i++) {
+//                        if (herbsModel.getKey().equals(resturantModels.get(i).getKey())) {
+//                            productModelList.add(herbsModel);
+//                        }
+//                    }
+//                }
+//                Config.dismissProgressDialog();
+//                herbsAdapter.notifyDataSetChanged();
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//
+//
+//        });
 
 
     }
