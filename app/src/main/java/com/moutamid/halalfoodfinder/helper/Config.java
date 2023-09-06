@@ -27,13 +27,13 @@ import java.util.Objects;
 
 public class Config {
     public static String preference_name = "HalalFoodFinder";
-
-//TODO use static key names
+    public static String favourite = "Favourite";
+    public static String restaurants = "Restaurants";
+    public static String currentModel = "CurrentModel";
     static SharedPreferences sharedpreferences;
     static SharedPreferences.Editor editor;
 
     private static Dialog progressDialog;
-
 
 
     public static DatabaseReference databaseReference() {
@@ -77,7 +77,7 @@ public class Config {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
     public static void checkApp(Activity activity) {
-        String appName = "HalalFoodFinder"; //TODO: CHANGE APP NAME
+        String appName = "HalalFoodFinder";
 
         new Thread(() -> {
             URL google = null;

@@ -16,6 +16,7 @@ import com.fxn.stash.Stash;
 import com.moutamid.halalfoodfinder.Activity.MainActivity;
 import com.moutamid.halalfoodfinder.Model.ResturantModel;
 import com.moutamid.halalfoodfinder.R;
+import com.moutamid.halalfoodfinder.helper.Config;
 
 import java.util.ArrayList;
 
@@ -35,15 +36,9 @@ public class SettingFragment extends Fragment {
         rate = view.findViewById(R.id.rate);
         share = view.findViewById(R.id.share);
         rest = view.findViewById(R.id.rest);
-        ArrayList<ResturantModel> resturantModel = Stash.getArrayList("Favourite", ResturantModel.class);
+        ArrayList<ResturantModel> resturantModel = Stash.getArrayList(Config.favourite, ResturantModel.class);
         rest.setText(resturantModel.size() + "");
-        rest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-        Intent intent= new Intent(getContext(), MainActivity.class);
 
-            }
-        });
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

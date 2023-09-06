@@ -7,48 +7,6 @@
     android:background="#F1F1F1"
     tools:context=".Activity.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:background="@color/purple_200">
-
-        <ImageView
-            android:id="@+id/menu"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="20dp"
-            android:src="@drawable/menu"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:id="@+id/favourite"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="20dp"
-            android:src="@drawable/baseline_favorite_24"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/main_bg" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/img"
-            android:layout_centerHorizontal="true"
-            android:rotation="-4"
-            android:text="Scan and eat Halal."
-            android:textColor="@color/white"
-            android:textSize="22dp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
 
 
     <FrameLayout

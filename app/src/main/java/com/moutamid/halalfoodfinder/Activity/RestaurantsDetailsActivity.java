@@ -13,19 +13,19 @@ import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
 import com.moutamid.halalfoodfinder.Model.ResturantModel;
 import com.moutamid.halalfoodfinder.R;
+import com.moutamid.halalfoodfinder.helper.Config;
 
 import java.util.ArrayList;
 
 public class RestaurantsDetailsActivity extends AppCompatActivity {
 
     //TODO name change of variable
-    ImageView image, favourite, unfavourite;
+    ImageView resImage_img, favourite_img, unfavourite_img;
     TextView name, phone_res, address_res, description, website, title;
     TextView mon_opnening, tue_opnening, wed_opnening, thursday_opnening, fri_opnening, sat_opnening, sun_opnening;
     TextView mon_closing, tue_closing, wed_closing, thursday_closing, fri_closing, sat_closing, sun_closing;
     double lat, lng;
     Button map;
-    String key;
 
     ResturantModel current_resturantModel;
 
@@ -33,9 +33,9 @@ public class RestaurantsDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants_details);
-        image = findViewById(R.id.image);
-        unfavourite = findViewById(R.id.unfavourite);
-        favourite = findViewById(R.id.favourite);
+        resImage_img = findViewById(R.id.image);
+        unfavourite_img = findViewById(R.id.unfavourite);
+        favourite_img = findViewById(R.id.favourite);
         map = findViewById(R.id.map);
         phone_res = findViewById(R.id.phone_res);
         address_res = findViewById(R.id.address);
@@ -57,79 +57,76 @@ public class RestaurantsDetailsActivity extends AppCompatActivity {
         fri_closing = findViewById(R.id.fru_closing);
         sat_closing = findViewById(R.id.sat_closing);
         sun_closing = findViewById(R.id.sun_closing);
-        current_resturantModel = (ResturantModel) Stash.getObject("CurrentModel", ResturantModel.class);
+        current_resturantModel = (ResturantModel) Stash.getObject(Config.currentModel, ResturantModel.class);
         name.setText(current_resturantModel.getName());
         title.setText(current_resturantModel.getName());
+        address_res.setText(current_resturantModel.getAddress());
+        tue_opnening.setText(current_resturantModel.getTue_opnening());
+        tue_closing.setText(current_resturantModel.getTue_closing());
+        wed_opnening.setText(current_resturantModel.getWed_opnening());
+        wed_closing.setText(current_resturantModel.getWed_closing());
+        fri_opnening.setText(current_resturantModel.getFri_opnening());
+        fri_closing.setText(current_resturantModel.getFri_closing());
+        sat_opnening.setText(current_resturantModel.getSat_opnening());
+        sat_closing.setText(current_resturantModel.getSat_closing());
+        sun_opnening.setText(current_resturantModel.getSun_opnening());
+        sun_closing.setText(current_resturantModel.getSat_closing());
+        Glide.with(RestaurantsDetailsActivity.this).load(current_resturantModel.getImage_url()).into(resImage_img);
+        phone_res.setText(current_resturantModel.getPhone());
+        description.setText(current_resturantModel.getShort_description());
+        mon_closing.setText(current_resturantModel.getMon_closing());
+        mon_opnening.setText(current_resturantModel.getMon_opnening());
+        thursday_closing.setText(current_resturantModel.getThursday_closing());
+        thursday_opnening.setText(current_resturantModel.getThursday_opnening());
+        website.setText(current_resturantModel.getWebsite());
+        ArrayList<ResturantModel> resturantModels = Stash.getArrayList(Config.favourite, ResturantModel.class);
+        if (resturantModels != null) {
+            for (int i = 0; i < resturantModels.size(); i++) {
 
-        //TODO
-        address_res.setText(getIntent().getStringExtra("address"));
-        tue_opnening.setText(getIntent().getStringExtra("tueOpnening"));
-        tue_closing.setText(getIntent().getStringExtra("tueClosing"));
-        wed_opnening.setText(getIntent().getStringExtra("wedOpnening"));
-        wed_closing.setText(getIntent().getStringExtra("wedClosing"));
-        fri_opnening.setText(getIntent().getStringExtra("friOpnening"));
-        fri_closing.setText(getIntent().getStringExtra("fri_closing"));
-        sat_opnening.setText(getIntent().getStringExtra("satOpnening"));
-        sat_closing.setText(getIntent().getStringExtra("satClosing"));
-        sun_opnening.setText(getIntent().getStringExtra("sunOpnening"));
-        sun_closing.setText(getIntent().getStringExtra("sunClosing"));
-        String imageUrl = getIntent().getStringExtra("imageUrl");
-        Glide.with(RestaurantsDetailsActivity.this).load(imageUrl).into(image);
-        phone_res.setText(getIntent().getStringExtra("phone"));
-        description.setText(getIntent().getStringExtra("shortDescription"));
-        mon_closing.setText(getIntent().getStringExtra("monClosing"));
-        mon_opnening.setText(getIntent().getStringExtra("monOpnening"));
-        thursday_closing.setText(getIntent().getStringExtra("thursdayClosing"));
-        thursday_opnening.setText(getIntent().getStringExtra("thursdayOpnening"));
-        website.setText(getIntent().getStringExtra("website"));
-        lat = getIntent().getDoubleExtra("lat", 0.0);
-        lng = getIntent().getDoubleExtra("lng", 0.0);
-        key = getIntent().getStringExtra("key");
-        ArrayList<ResturantModel> resturantModels = Stash.getArrayList("Favourite", ResturantModel.class);
-if(resturantModels!=null)
-{
-    for (int i = 0; i < resturantModels.size(); i++) {
+                if (current_resturantModel.getKey().equals(resturantModels.get(i).getKey())) {
+                    unfavourite_img.setVisibility(View.VISIBLE);
 
-        if (current_resturantModel.getKey().equals(resturantModels.get(i).getKey())) {
-            favourite.setImageResource(R.drawable.baseline_favorite_24);
-//
-        }
+                } else {
+                    favourite_img.setVisibility(View.VISIBLE);
 
-    }
+                }
+
+            }
 }
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RestaurantsDetailsActivity.this, MapActivity.class);
-                intent.putExtra("lat", lat);
-                intent.putExtra("lng", lng);
-                intent.putExtra("name", getIntent().getStringExtra("name"));
+                intent.putExtra("lat", current_resturantModel.getLat());
+                intent.putExtra("lng", current_resturantModel.getLng());
+                intent.putExtra("name", current_resturantModel.getName());
                 startActivity(intent);
             }
         });
-        favourite.setOnClickListener(new View.OnClickListener() {
+        favourite_img.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                ArrayList<ResturantModel> resturantModelArrayList = Stash.getArrayList("Favourite", ResturantModel.class);
+                ArrayList<ResturantModel> resturantModelArrayList = Stash.getArrayList(Config.favourite, ResturantModel.class);
                 resturantModelArrayList.add(current_resturantModel);
-                Stash.put("Favourite", resturantModelArrayList);
-                favourite.setImageResource(R.drawable.baseline_favorite_24);
+                Stash.put(Config.favourite, resturantModelArrayList);
+                unfavourite_img.setVisibility(View.VISIBLE);
+                favourite_img.setVisibility(View.GONE);
             }
         });
-        unfavourite.setOnClickListener(new View.OnClickListener() {
+        unfavourite_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<ResturantModel> resturantModel = Stash.getArrayList("Favourite", ResturantModel.class);
+                ArrayList<ResturantModel> resturantModel = Stash.getArrayList(Config.favourite, ResturantModel.class);
                 for (int i = 0; i < resturantModel.size(); i++) {
                     if (resturantModel.get(i).getKey().equals(current_resturantModel.getKey())) {
                         resturantModel.remove(i);
                     }
                 }
-                Stash.put("Favourite", resturantModel);
-                favourite.setImageResource(R.drawable.baseline_favorite_border_24);
-
+                Stash.put(Config.favourite, resturantModel);
+                unfavourite_img.setVisibility(View.GONE);
+                favourite_img.setVisibility(View.VISIBLE);
             }
         });
     }

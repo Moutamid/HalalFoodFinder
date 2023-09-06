@@ -187,13 +187,10 @@ public class BarcodeActivity extends AppCompatActivity {
                     }
                     new Handler().postDelayed(new Runnable() {
                         @Override
-
                         public void run() {
                             FeedBackDialogClass cdd = new FeedBackDialogClass(BarcodeActivity.this, key, item_name, item_type, itemCategory, item_barcode);
                             cdd.show();
-
                         }
-
                     }, 1 * 1000); // wait for 5 seconds
 
                 }
@@ -207,7 +204,6 @@ public class BarcodeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("date", databaseError.toString() + "  f");
-
             }
         });
     }
@@ -217,12 +213,13 @@ public class BarcodeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(this, "abc "+requestCode+""+resultCode+""+data, Toast.LENGTH_SHORT).show();
-//        if (requestCode==201) {
-            initialiseDetectorsAndSources();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CAMERA_PERMISSION:
+            recreate();
 
-//        }
+        }
     }
+
 }

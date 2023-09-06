@@ -128,7 +128,7 @@ public class ResturantFragment extends Fragment {
 
     private void getProducts() {
         Config.showProgressDialog(getContext());
-        Config.databaseReference().child("Restaurants").addValueEventListener(new ValueEventListener() {
+        Config.databaseReference().child(Config.restaurants).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 productModelList.clear();

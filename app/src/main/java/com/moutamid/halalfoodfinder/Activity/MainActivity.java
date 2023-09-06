@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView binding;
     FloatingActionButton barcode;
-    ImageView menu, favourite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         binding = findViewById(R.id.bottomNavigationView);
         barcode = findViewById(R.id.barcode);
-        menu = findViewById(R.id.menu);
-        favourite = findViewById(R.id.favourite);
-        favourite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, FavouriteActivity.class));
-            }
-        });
+
         replaceFragment(new ResturantFragment());
         binding.setBackground(null);
         binding.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
