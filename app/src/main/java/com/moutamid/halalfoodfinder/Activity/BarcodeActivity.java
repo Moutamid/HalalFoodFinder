@@ -12,10 +12,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -209,7 +207,7 @@ public class BarcodeActivity extends AppCompatActivity {
     }
 
     public void backpress(View view) {
-        onBackPressed();
+        finish();
     }
 
     @Override
@@ -217,9 +215,13 @@ public class BarcodeActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_CAMERA_PERMISSION:
-            recreate();
-
+                startActivity(new Intent(BarcodeActivity.this, BarcodeActivity.class));
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
