@@ -1,6 +1,7 @@
 package com.moutamid.halalfoodfinder.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.L;
 import com.moutamid.halalfoodfinder.Model.ProductModel;
 import com.moutamid.halalfoodfinder.R;
 
@@ -36,8 +38,9 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Ga
     @Override
     public void onBindViewHolder(@NonNull GalleryPhotosViewHolder holder, final int position) {
         ProductModel productModel = productModels.get(position);
+        Log.d("data",productModel.getName()+"  "+productModel.getItem_type() );
         holder.item_type.setText(productModel.getItem_type());
-        holder.item_name.setText(productModel.getName());
+        holder.item_name.setText(productModel.getItem_name());
         if (productModels.get(position).getItem_type().equals("Limited Risk")) {
             holder.type.setBackgroundResource(R.drawable.red_bg);
         } else if (productModels.get(position).getItem_type().equals("Risky")) {

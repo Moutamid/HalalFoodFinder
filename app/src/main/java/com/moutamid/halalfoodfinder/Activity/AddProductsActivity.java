@@ -40,7 +40,7 @@ public class AddProductsActivity extends AppCompatActivity {
     String intentData = "";
     EditText item_name, name, age, cnic;
     RadioGroup item_category, item_types;
-    String item_category_str = "Halal", item_types_str = "Risk Free", item_name_str, item_barcode_str;
+    String item_category_str = "Halal", item_types_str = "Limited Risk", item_name_str, item_barcode_str;
     TextView add_btn;
 
     @Override

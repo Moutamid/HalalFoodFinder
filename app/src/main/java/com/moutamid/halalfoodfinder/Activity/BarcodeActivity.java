@@ -4,29 +4,31 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.halalfoodfinder.Dialogue.FeedBackDialogClass;
+import com.moutamid.halalfoodfinder.Model.ProductModel;
 import com.moutamid.halalfoodfinder.R;
 import com.moutamid.halalfoodfinder.helper.Config;
 
@@ -39,7 +41,7 @@ public class BarcodeActivity extends AppCompatActivity {
     TextView txtBarcodeValue;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
-    FloatingActionButton add_product;
+    CardView add_product, feedback;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     String intentData = "";
     String itemCategory = "Doubtful";
@@ -48,6 +50,9 @@ public class BarcodeActivity extends AppCompatActivity {
     String item_barcode, key;
     Toolbar toolbar;
     ImageView image_type;
+    private RadioGroup item_type_;
+    String item_types_str = "Like";
+    TextView upload, txtBarcodeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +67,32 @@ public class BarcodeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_);
         image_type = findViewById(R.id.image_type);
         add_product = findViewById(R.id.add_product);
+        feedback = findViewById(R.id.feedback);
+        txtBarcodeName = findViewById(R.id.txtBarcodeName);
         add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(BarcodeActivity.this, AddProductsActivity.class));
+                finish();
             }
         });
-//        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
-    }
+        item_type_ = findViewById(R.id.item_type_);
+        upload = findViewById(R.id.upload);
+        item_type_.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                RadioButton radioButton = findViewById(i);
+                item_types_str = radioButton.getText().toString();
 
-    //TODO
+            }
+        });
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDataToFirebase(key, item_barcode, item_name, itemCategory, item_type, item_types_str);
+            }
+        });
+    }
     private void initialiseDetectorsAndSources() {
 
         barcodeDetector = new BarcodeDetector.Builder(this)
@@ -172,31 +193,27 @@ public class BarcodeActivity extends AppCompatActivity {
                         item_name = ds.child("item_name").getValue().toString();
                         item_barcode = ds.child("item_barcode").getValue().toString();
                         key = ds.child("key").getValue().toString();
-                        Log.d("type", itemCategory);
-                        if (itemCategory.equals("Halal")) {
-                            txtBarcodeValue.setText("Halal");
-                        } else if (itemCategory.equals("Haram")) {
-                            txtBarcodeValue.setText("Haram");
-                        } else {
+                        txtBarcodeName.setText(item_name);
+                         txtBarcodeValue.setText(itemCategory);
+
+
+                        feedback.setVisibility(View.VISIBLE);
+
+                    }
+                    else
+                    {
+                        if (itemCategory.equals("Doubtful")) {
                             txtBarcodeValue.setText("Doubtful");
-
-
+                            add_product.setVisibility(View.VISIBLE);
                         }
                     }
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            FeedBackDialogClass cdd = new FeedBackDialogClass(BarcodeActivity.this, key, item_name, item_type, itemCategory, item_barcode);
-                            cdd.show();
-                        }
-                    }, 1 * 1000); // wait for 5 seconds
 
                 }
+
                 if (itemCategory.equals("Doubtful")) {
                     txtBarcodeValue.setText("Doubtful");
                     add_product.setVisibility(View.VISIBLE);
                 }
-
             }
 
             @Override
@@ -224,4 +241,27 @@ public class BarcodeActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
+    public void addDataToFirebase(String key, String item_barcode_str, String item_name_str, String item_category_str, String item_types_str, String feedback) {
+        Config.showProgressDialog(BarcodeActivity.this);
+        ProductModel productModel = new ProductModel();
+        productModel.setItem_barcode(item_barcode_str);
+        productModel.setItem_name(item_name_str);
+        productModel.setItem_category(item_category_str);
+        productModel.setItem_type(item_types_str);
+        productModel.setFeedback(feedback);
+        productModel.setKey(key);
+        Config.databaseReference().child("Feedback").child(feedback).child(key).setValue(productModel)
+                .addOnSuccessListener(aVoid -> {
+                    Config.dismissProgressDialog();
+                    Toast.makeText(BarcodeActivity.this, "Successfully Submitted", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Config.dismissProgressDialog();
+                    Toast.makeText(BarcodeActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+                });
+
+    }
+
 }
