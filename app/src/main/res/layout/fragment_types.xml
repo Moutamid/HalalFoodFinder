@@ -167,7 +167,7 @@ You can also add an item to check in which category it falls."
 
         <androidx.cardview.widget.CardView
             android:id="@+id/add_product"
-
+            app:cardBackgroundColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@+id/lay1"

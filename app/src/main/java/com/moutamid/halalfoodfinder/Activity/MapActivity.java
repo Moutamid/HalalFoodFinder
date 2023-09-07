@@ -22,8 +22,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     // below are the latitude and longitude
     // of 4 different locations.
-    LatLng sydney = new LatLng(-34, 151);
-    LatLng TamWorth = new LatLng(-31.083332, 150.916672);
     double lat, lng;
     // creating array list for adding all our locations.
     private ArrayList<LatLng> locationArrayList;
@@ -50,12 +48,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         lng = getIntent().getDoubleExtra("lng", 0.0);
         name = getIntent().getStringExtra("name");
         if (lat != 0.0) {
+
             LatLng sydney = new LatLng(lat, lng);
             locationArrayList.add(sydney);
         } else {
             for (int i = 0; i < locationModels.size(); i++) {
                 LatLng sydney = new LatLng(locationModels.get(i).getLat(), locationModels.get(i).getLng());
-                locationArrayList.add(sydney);
+                if (locationModels.get(i).getLat() > -90 && locationModels.get(i).getLat() < 90 && locationModels.get(i).getLng() > -180 && locationModels.get(i).getLng() < 180) {
+                    locationArrayList.add(sydney);
+
+                }
             }
         }
 

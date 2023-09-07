@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
+                android:textColor="@color/black"
                 android:text="Like" />
 
 
@@ -47,6 +48,7 @@
                 android:id="@+id/not_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:text="Dislike" />
 

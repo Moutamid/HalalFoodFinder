@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="50dp">
 
 
@@ -30,9 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="start|bottom"
-            android:background="@android:color/transparent"
+            android:background="@color/white"
             app:circleColor="@color/purple_200"
             app:itemIconTint="@color/purple_200"
+            android:backgroundTint="@color/white"
             app:itemRippleColor="@color/purple_200"
             app:itemTextColor="@color/purple_200"
             app:menu="@menu/bottom_menu" />

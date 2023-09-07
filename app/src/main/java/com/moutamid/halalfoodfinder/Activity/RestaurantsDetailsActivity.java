@@ -2,10 +2,12 @@ package com.moutamid.halalfoodfinder.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -96,11 +98,19 @@ public class RestaurantsDetailsActivity extends AppCompatActivity {
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RestaurantsDetailsActivity.this, MapActivity.class);
-                intent.putExtra("lat", current_resturantModel.getLat());
-                intent.putExtra("lng", current_resturantModel.getLng());
-                intent.putExtra("name", current_resturantModel.getName());
-                startActivity(intent);
+                Log.d("latlng", current_resturantModel.getLat() + "   " + current_resturantModel.getLng());
+
+                if (current_resturantModel.getLat() > -90 && current_resturantModel.getLat() < 90 && current_resturantModel.getLng() > -180 && current_resturantModel.getLng() < 180) {
+                    Intent intent = new Intent(RestaurantsDetailsActivity.this, MapActivity.class);
+                    intent.putExtra("lat", current_resturantModel.getLat());
+                    intent.putExtra("lng", current_resturantModel.getLng());
+                    intent.putExtra("name", current_resturantModel.getName());
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(RestaurantsDetailsActivity.this, "Invalid Coordinates to show marker", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         favourite_img.setOnClickListener(new View.OnClickListener() {

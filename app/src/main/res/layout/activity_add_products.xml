@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -49,6 +50,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/edit_bg"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+
                 android:hint="Name "
                 android:imeOptions="actionGo"
                 android:maxLines="1"
@@ -64,6 +68,10 @@
                 android:hint="Age "
                 android:imeOptions="actionGo"
                 android:maxLines="1"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+
 
                 android:padding="10dp" />
 
@@ -78,6 +86,9 @@
                 android:hint="CNIC "
                 android:imeOptions="actionGo"
                 android:inputType="number"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+
                 android:maxLines="1"
                 android:padding="10dp" />
 
@@ -90,6 +101,9 @@
                 android:hint="Product Name "
                 android:imeOptions="actionGo"
                 android:maxLines="1"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+
                 android:padding="10dp" />
 
             <TextView
@@ -98,6 +112,9 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/edit_bg"
                 android:gravity="center_vertical"
@@ -130,6 +147,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
+
                     android:text="Risky" />
 
 
@@ -139,12 +158,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
+                    android:textColor="@color/black"
+
                     android:text="Limited Risk" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
 
                     android:text="Risk Free" />
             </RadioGroup>
@@ -169,6 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -176,6 +199,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
+
                     android:text="Haram" />
 
                 <RadioButton
@@ -184,6 +209,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
+                    android:textColor="@color/black"
+
                     android:text="Halal" />
 
 
@@ -192,6 +219,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
+
                     android:text="Doubtful" />
             </RadioGroup>
 
@@ -216,7 +245,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:layout_height="match_parent"
-            android:visibility="visible" />
+            />
 
 
     </RelativeLayout>
