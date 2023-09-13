@@ -20,6 +20,7 @@ import com.moutamid.halalfoodfinder.Fragment.ResturantFragment;
 import com.moutamid.halalfoodfinder.Fragment.SettingFragment;
 import com.moutamid.halalfoodfinder.Fragment.TypesFragment;
 import com.moutamid.halalfoodfinder.R;
+import com.moutamid.halalfoodfinder.helper.Config;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         binding = findViewById(R.id.bottomNavigationView);
         barcode = findViewById(R.id.barcode);
-
+        Config.checkApp(MainActivity.this);
         replaceFragment(new ResturantFragment());
         binding.setBackground(null);
         binding.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

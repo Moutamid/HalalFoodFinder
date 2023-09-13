@@ -57,6 +57,10 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.github.Kwasow:BottomNavigationCircles-Android:1.2")
     implementation("com.makeramen:roundedimageview:2.3.0")
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+
     //Room Database
 
 
