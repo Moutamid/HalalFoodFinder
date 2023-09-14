@@ -164,6 +164,7 @@ public class ResturantFragment extends Fragment {
 
             }
         });
+        Config.dismissProgressDialog();
 
     }
 
@@ -188,5 +189,10 @@ public class ResturantFragment extends Fragment {
             // list to our adapter class.
             herbsAdapter.filterList(filteredlist);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
